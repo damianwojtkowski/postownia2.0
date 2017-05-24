@@ -10,12 +10,15 @@ app.get('/posts', function (req, res) {
       return res.send(err);
     }
     return res.send(content);
-    console.log('XDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
   });
 });
 
-app.get('*', function (req, res) {
-  res.sendFile('index.html', {root: __dirname + '/public'});
+// app.get('*', function (req, res) {
+//   res.sendFile('index.html', {root: __dirname + '/public'});
+// });
+
+app.get('/', function (req, res) {
+	res.send('index.html');
 });
 
 app.listen(9876);
