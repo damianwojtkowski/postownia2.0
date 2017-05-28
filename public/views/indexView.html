@@ -1,4 +1,12 @@
-<!-- <div ng-include=" 'public/views/postsView.html' ">
-</div> -->
-
-<div>{{index.posts}}</div>
+<div class="media" ng-repeat="post in index.posts">
+  <div class="media-left media-middle">
+    <a href="#">
+      <img class="media-object" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Text_document_with_red_question_mark.svg/40px-Text_document_with_red_question_mark.svg.png" alt="logo">
+    </a>
+  </div>
+  <div class="media-body">
+    <h3 class="media-heading">{{post.user}}</h3>
+    <h5 class="media-heading">{{post.postdate}}</h2>
+    <p>{{post.content}}</p>
+  </div>
+</div>
