@@ -10,4 +10,4 @@ To remind Postownia is a simple web site with blog functionality. User can:
   * Edit own posts,
   * Be an admin or just a user.
 
-Next functionalities will added soon.
+Next functionalities will be added soon.
