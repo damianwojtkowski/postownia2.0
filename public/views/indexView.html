@@ -6,7 +6,15 @@
   </div>
   <div class="media-body">
     <h3 class="media-heading">{{post.user}}</h3>
-    <h5 class="media-heading">{{post.postdate}}</h2>
+    <h5 class="media-heading">{{post.postdate}}</h5>
     <p>{{post.content}}</p>
   </div>
 </div>
+
+<form>
+  <div class="form-group">
+    <label for="newPost">Write new post below</label>
+    <textarea class="form-control" rows="5" id="newPost" placeholder="Your new post" ng-model="index.content"></textarea>
+  </div>
+  <button type="button" class="btn-success" ng-click="index.addPost()">Add post</button>
+</form>
