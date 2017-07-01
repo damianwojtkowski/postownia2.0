@@ -18,7 +18,6 @@ app.delete('/deletepost/:postID', function (req, res) {
         array.splice(index, 1);
       }
     });
-    //console.log(posts);
     var json = JSON.stringify(posts);
     fs.writeFileSync('posts.json', json);
     return res.send();
