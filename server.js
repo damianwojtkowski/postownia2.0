@@ -6,6 +6,25 @@ var app = express();
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
+app.delete('/deletepost/:postID', function (req, res) {
+  fs.readFile('posts.json', function (err, content) {
+    if (err) {
+      return res.send(err);
+    }
+    var postID = req.params.postID;
+    var posts = JSON.parse(content);
+    posts.forEach(function (obj, index, array) {
+      if (+postID === obj.postid) {
+        array.splice(index, 1);
+      }
+    });
+    //console.log(posts);
+    var json = JSON.stringify(posts);
+    fs.writeFileSync('posts.json', json);
+    return res.send();
+  });
+});
+
 app.get('/posts', function (req, res) {
   fs.readFile('posts.json', function (err, content) {
     if (err) {

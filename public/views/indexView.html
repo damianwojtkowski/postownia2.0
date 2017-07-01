@@ -9,6 +9,11 @@
     <h5 class="media-heading">{{post.postdate}}</h5>
     <p>{{post.content}}</p>
   </div>
+  <div class="media-right" ng-if="post.user === index.user">
+    <button type="button" class="btn-danger" ng-click="index.deletePost(post.postid)" value="">
+      <span class="glyphicon glyphicon-remove"></span>Remove
+    </button>
+  </div>
 </div>
 
 <form>
