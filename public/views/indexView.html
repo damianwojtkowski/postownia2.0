@@ -1,25 +1,44 @@
-<div class="media" ng-repeat="post in index.posts">
-  <div class="media-left media-middle">
-    <a href="#">
-      <img class="media-object" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Text_document_with_red_question_mark.svg/40px-Text_document_with_red_question_mark.svg.png" alt="logo">
-    </a>
-  </div>
-  <div class="media-body">
-    <h3 class="media-heading">{{post.user}}</h3>
-    <h5 class="media-heading">{{post.postdate}}</h5>
-    <p>{{post.content}}</p>
-  </div>
-  <div class="media-right" ng-if="post.user === index.user">
-    <button type="button" class="btn-danger" ng-click="index.deletePost(post.postid)" value="">
-      <span class="glyphicon glyphicon-remove"></span>Remove
-    </button>
-  </div>
-</div>
+<div class="container">
+  <p><font size="7">Welcome to Postownia</font></p>
+  <div class="media" ng-repeat="post in index.posts">
+    <div class="media-left media-middle">
+      <a href="#">
+        <img class="media-object" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Text_document_with_red_question_mark.svg/40px-Text_document_with_red_question_mark.svg.png" alt="logo">
+      </a>
+    </div>
+    <div class="media-body">
+      <h3 class="media-heading">{{post.user}}</h3>
+      <h5 class="media-heading">{{post.postdate}}</h5>
+      <div ng-if="post.isShowed">
+        <p>{{post.content}}</p>
+      </div>
+      <div ng-if="!post.isShowed">
+        <textarea class="form-control" rows="3" cols="20"  ng-model="index.newContent">{{post.content}}</textarea>
+        <button type="button" class="btn btn-primary" ng-click="index.changeContent(post.postid)">
+          <span class="glyphicon glyphicon-ok"></span> Change
+        </button>
+      </div>
+    </div>
+    <div class="media-right media-middle" ng-if="post.user === index.user">
+      <button type="button" class="btn btn-info" ng-click="index.showEditArea(post.postid)">
+        <span class="glyphicon glyphicon-pencil"></span> Edit
+      </button>
+    </div>
+    <div class="media-right media-middle" ng-if="post.user === index.user">
+      <button type="button" class="btn btn-danger" ng-click="index.deletePost(post.postid)">
+        <span class="glyphicon glyphicon-remove"></span> Remove
+      </button>
+    </div>
 
-<form>
-  <div class="form-group">
-    <label for="newPost">Write new post below</label>
-    <textarea class="form-control" rows="5" id="newPost" placeholder="Your new post" ng-model="index.content"></textarea>
   </div>
-  <button type="button" class="btn-success" ng-click="index.addPost()">Add post</button>
-</form>
+
+  <form>
+    <div class="form-group">
+      <label for="newPost">Write new post below</label>
+      <textarea class="form-control" rows="5" id="newPost" placeholder="Your new post" ng-model="index.content"></textarea>
+    </div>
+    <button type="button" class="btn-success" ng-click="index.addPost()">
+      <span class="glyphicon glyphicon-plus"></span> Add post
+    </button>
+  </form>
+</div>

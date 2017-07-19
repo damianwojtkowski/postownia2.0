@@ -23,7 +23,6 @@ app.delete('/deletepost/:postID', function (req, res) {
     return res.send();
   });
 });
-
 app.get('/posts', function (req, res) {
   fs.readFile('posts.json', function (err, content) {
     if (err) {
@@ -32,11 +31,30 @@ app.get('/posts', function (req, res) {
     return res.send(content);
   });
 });
-
-// app.get('*', function (req, res) {
-//   res.sendFile('index.html', {root: __dirname + '/public'});
-// });
-
+app.post('/editContent', function (req, res) {
+  fs.readFile('posts.json', function (err, content) {
+    if (err) {
+      return res.send(err);
+    }
+    var postID = req.body.postid
+    var posts = JSON.parse(content);
+    posts.forEach(function (obj, index, array) {
+      if (postID === obj.postid) {
+        var date = new Date();
+        var newPost = {
+          user: 'Damian',
+          postdate: date,
+          content: req.body.post,
+          postid: date.getTime()
+        }
+        array[index] = newPost;
+      }
+    });
+    var file = JSON.stringify(posts);
+    fs.writeFileSync('posts.json', file);
+    return res.send();
+  });
+});
 app.post('/newpost', function (req, res) {
   fs.readFile('posts.json', function (err, content) {
     if (err) {
@@ -55,14 +73,12 @@ app.post('/newpost', function (req, res) {
     json.push(post);
     var file = JSON.stringify(json);
     fs.writeFileSync('posts.json', file)
-    return res.send()
+    return res.send();
   });
 });
-
 app.get('/', function (req, res) {
 	res.send('index.html');
 });
-
 app.listen(9876);
 
 console.log('Server is running');
