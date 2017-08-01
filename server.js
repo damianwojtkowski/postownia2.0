@@ -1,10 +1,20 @@
 var express = require('express');
 var fs = require('fs');
 var bodyParser = require('body-parser');
+var MongoClient = require('mongodb').MongoClient;
+var url = 'mongodb://localhost:27017/postowniadb';
 var app = express();
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
+
+MongoClient.connect(url, function (err, db) {
+  if (err) {
+    return err;
+  }
+  console.log('Database created!');
+  db.close();
+});
 
 app.delete('/deletepost/:postID', function (req, res) {
   fs.readFile('posts.json', function (err, content) {
@@ -23,12 +33,25 @@ app.delete('/deletepost/:postID', function (req, res) {
     return res.send();
   });
 });
+// app.get('/posts', function (req, res) {
+//   fs.readFile('posts.json', function (err, content) {
+//     if (err) {
+//       return res.send(err);
+//     }
+//     return res.send(content);
+//   });
+// });
 app.get('/posts', function (req, res) {
-  fs.readFile('posts.json', function (err, content) {
+  MongoClient.connect(url, function (err, db) {
     if (err) {
-      return res.send(err);
+      return err;
     }
-    return res.send(content);
+    db.collection('posts').find({}).toArray(function (err, result) {
+      if (err) {
+        return res.send(err);
+      }
+      return res.send(result);
+    });
   });
 });
 app.post('/editContent', function (req, res) {
