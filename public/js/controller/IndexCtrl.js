@@ -1,6 +1,7 @@
 angular.module('postownia').controller('IndexCtrl', ['$http', function ($http) {
   var vm = this;
   vm.user = 'Damian';
+  
   vm.displayPosts = function () {
   $http.get('/posts').then(function (res) {
     vm.posts = res.data;
