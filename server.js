@@ -21,7 +21,7 @@ app.delete('/deletepost/:postID', function (req, res) {
       return err;
     }
     var deletedPostID = req.params.postID;
-    var deletedPost = {_id: new mongodb.ObjectID(req.params.postID)};
+    var deletedPost = {_id: new mongodb.ObjectID(deletedPostID)};
     db.collection('posts').deleteOne(deletedPost, function (err, obj) {
       if (err) {
         return res.send(err);
@@ -43,28 +43,19 @@ app.get('/posts', function (req, res) {
     });
   });
 });
-app.post('/editContent', function (req, res) {
-  fs.readFile('posts.json', function (err, content) {
+app.post('/editpost', function (req, res) {
+  MongoClient.connect(url, function (err, db) {
     if (err) {
-      return res.send(err);
+      return err;
     }
-    var postID = req.body.postid
-    var posts = JSON.parse(content);
-    posts.forEach(function (obj, index, array) {
-      if (postID === obj.postid) {
-        var date = new Date();
-        var newPost = {
-          user: 'Damian',
-          postdate: date,
-          content: req.body.post,
-          postid: date.getTime()
-        }
-        array[index] = newPost;
+    var editedPost = {_id: new mongodb.ObjectID(req.body.postid)};
+    var editedPostContent = req.body.post;
+    db.collection('posts').update(editedPost, {$set: {content: editedPostContent}}, function (err, result) {
+      if (err) {
+        return res.send(err);
       }
+      return res.send();
     });
-    var file = JSON.stringify(posts);
-    fs.writeFileSync('posts.json', file);
-    return res.send();
   });
 });
 app.post('/newpost', function (req, res) {

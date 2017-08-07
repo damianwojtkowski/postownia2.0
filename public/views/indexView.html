@@ -13,8 +13,8 @@
         <p>{{post.content}}</p>
       </div>
       <div ng-if="!post.isShowed">
-        <textarea class="form-control" rows="3" cols="20">{{post.content}}</textarea>
-        <button type="button" class="btn btn-primary" ng-click="index.changeContent(post._id)" >
+        <textarea class="form-control" rows="3" cols="20" ng-model="index.newContent">{{post.content}}</textarea>
+        <button type="button" class="btn btn-primary" ng-click="index.changeContent(post._id)">
           <span class="glyphicon glyphicon-ok"></span> Change
         </button>
       </div>

@@ -20,7 +20,7 @@ angular.module('postownia').controller('IndexCtrl', ['$http', function ($http) {
   vm.changeContent = function (postID) {
     var data = {postid: postID,
       post: vm.newContent};
-    $http.post('/editContent', data).then(function (res) {
+    $http.post('/editpost', data).then(function (res) {
       vm.displayPosts();
     });
   }
@@ -32,8 +32,9 @@ angular.module('postownia').controller('IndexCtrl', ['$http', function ($http) {
   }
   vm.showEditArea = function (postID) {
     vm.posts.forEach(function (obj) {
-      if (postID === obj.postid) {
+      if (postID === obj._id) {
         obj.isShowed = !obj.isShowed;
+        vm.newContent = obj.content;
       }
     });
   }
