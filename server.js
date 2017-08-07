@@ -2,6 +2,7 @@ var express = require('express');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+var mongodb = require('mongodb');
 var url = 'mongodb://localhost:27017/postowniadb';
 var app = express();
 
@@ -12,25 +13,21 @@ MongoClient.connect(url, function (err, db) {
   if (err) {
     return err;
   }
-  console.log('Database created!');
   db.close();
 });
-
 app.delete('/deletepost/:postID', function (req, res) {
-  fs.readFile('posts.json', function (err, content) {
+  MongoClient.connect(url, function (err, db) {
     if (err) {
-      return res.send(err);
+      return err;
     }
-    var postID = req.params.postID;
-    var posts = JSON.parse(content);
-    posts.forEach(function (obj, index, array) {
-      if (+postID === obj.postid) {
-        array.splice(index, 1);
+    var deletedPostID = req.params.postID;
+    var deletedPost = {_id: new mongodb.ObjectID(req.params.postID)};
+    db.collection('posts').deleteOne(deletedPost, function (err, obj) {
+      if (err) {
+        return res.send(err);
       }
+      return res.send();
     });
-    var json = JSON.stringify(posts);
-    fs.writeFileSync('posts.json', json);
-    return res.send();
   });
 });
 app.get('/posts', function (req, res) {
@@ -80,8 +77,7 @@ app.post('/newpost', function (req, res) {
     var date = new Date();
     var newPost = {user_name: 'Damian',
       content: content,
-      postdate: date,
-      postid: date.getTime()
+      postdate: date
     };
     db.collection('posts').insertOne(newPost, function (err, result) {
       if (err) {

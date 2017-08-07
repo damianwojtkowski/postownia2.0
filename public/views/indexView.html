@@ -14,18 +14,18 @@
       </div>
       <div ng-if="!post.isShowed">
         <textarea class="form-control" rows="3" cols="20">{{post.content}}</textarea>
-        <button type="button" class="btn btn-primary" ng-click="index.changeContent(post.postid)" >
+        <button type="button" class="btn btn-primary" ng-click="index.changeContent(post._id)" >
           <span class="glyphicon glyphicon-ok"></span> Change
         </button>
       </div>
     </div>
     <div class="media-right media-middle" ng-if="post.user_name === index.user">
-      <button type="button" class="btn btn-info" ng-click="index.showEditArea(post.postid)">
+      <button type="button" class="btn btn-info" ng-click="index.showEditArea(post._id)">
         <span class="glyphicon glyphicon-pencil"></span> Edit
       </button>
     </div>
     <div class="media-right media-middle" ng-if="post.user_name === index.user">
-      <button type="button" class="btn btn-danger" ng-click="index.deletePost(post.postid)">
+      <button type="button" class="btn btn-danger" ng-click="index.deletePost(post._id)">
         <span class="glyphicon glyphicon-remove"></span> Remove
       </button>
     </div>

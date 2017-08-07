@@ -1,7 +1,7 @@
 angular.module('postownia').controller('IndexCtrl', ['$http', function ($http) {
   var vm = this;
   vm.user = 'Damian';
-  
+
   vm.displayPosts = function () {
   $http.get('/posts').then(function (res) {
     vm.posts = res.data;
@@ -28,7 +28,7 @@ angular.module('postownia').controller('IndexCtrl', ['$http', function ($http) {
     $http.delete('/deletepost/' + postID).then(function (res) {
       vm.content = '';
       vm.displayPosts();
-    })
+    });
   }
   vm.showEditArea = function (postID) {
     vm.posts.forEach(function (obj) {
